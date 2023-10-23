@@ -1,0 +1,7 @@
+A  = input("Escribe tu nombre: ")
+B = input("Escribe el primer apellido: ")
+C = input("Escribe el segundo apellido: ")
+D = input("Diga el curso que realiza: ")
+E = input("Diga su color favorito: ")
+F = input("Mencione su película favorita: ")
+print("El alumno ",A, B, C,"que cursa ",D,", cuyo color favorito es ",E," y su película favorita es ",F,".")
