@@ -1,5 +1,5 @@
 import pygame
-from elementos import Nave
+from elementos import Nave, Fondo
 
 pygame.init()
 pantalla = pygame.display.set_mode((1000, 800))
@@ -12,6 +12,7 @@ avion = pygame.transform.scale(imagen_avion, (145, 170))
 salir = False
 
 nave = Nave()
+fondo = Fondo()
 
 while not salir:
     clock.tick(60)
@@ -29,7 +30,8 @@ while not salir:
     #elif teclas[pygame.K_DOWN]:
     #    postop += 1
 
-    pantalla.fill((0, 80, 170))
+    #pantalla.fill((0, 80, 170))
+    fondo.dibujar()
     #pantalla.blit(avion, (posIzda, postop))
     nave.dibujar()
     pygame.display.flip()
