@@ -4,7 +4,7 @@ import pygame
 class Nave:
     def __init__(self) -> None:
         self.x = 500
-        self.y = 200
+        self.y = 600
         self.imagen = [pygame.image.load("avion4.png"), pygame.image.load("avion5.png")]
         self.contador = 0
 
