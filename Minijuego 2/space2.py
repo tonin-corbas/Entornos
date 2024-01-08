@@ -13,7 +13,7 @@ reloj = pygame.time.Clock()
 FPS = 100
 
 #booleano de control
-running = True
+running = [True]
 posicion = (650,700)
 nave = elementos2.Nave(posicion)
 fondo = elementos2.Fondo()
@@ -65,7 +65,7 @@ while running:
 
     #pintaremos:
     #pantalla.fill((255,255,255))
-    grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala)
+    grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos, running)
     grupo_sprites_todos.draw(pantalla)
 
     #redibujar la pantala

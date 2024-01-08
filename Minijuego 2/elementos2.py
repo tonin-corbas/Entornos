@@ -9,6 +9,7 @@ class Nave (pygame.sprite.Sprite):
         self.imagenes2 = [pygame.transform.scale(self.imagenes[0], (70, 100)), pygame.transform.scale(self.imagenes[1], (70,100))]
         self.indice_imagen = 0
         self.image = self.imagenes2[self.indice_imagen]
+        self.mask = pygame.mask.from_surface(self.image)
         self.contador_imagen = 0
         #creamos un rectangulo a partir de la imagen
         self.rect = self.image.get_rect()
@@ -46,6 +47,15 @@ class Nave (pygame.sprite.Sprite):
         self.contador_imagen = (self.contador_imagen + 1) % 40
         self.indice_imagen = self.contador_imagen // 20
         self.image = self.imagenes2[self.indice_imagen]
+        #Capturar grupo sprites enemigos 3
+        grupo_sprites_enemigos = args[3]
+        #variable running
+        running = args[4]
+        #detectar colisiones
+        enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos,pygame.sprite.collide_mask)
+        if enemigo_colision:
+            enemigo_colision.kill()
+            running[0] = False
 #creador de enemigos
 class Enemigo(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
