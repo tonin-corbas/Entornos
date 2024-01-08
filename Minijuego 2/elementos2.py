@@ -52,7 +52,8 @@ class Enemigo(pygame.sprite.Sprite):
         super().__init__()
         #cargamos la imagen
         imagen = pygame.image.load("avion4.png")
-        self.image = pygame.transform.rotate(imagen, 180)
+        imagen2 = pygame.transform.scale(imagen, (80, 140))
+        self.image = pygame.transform.rotate(imagen2, 180)
         self.mask = pygame.mask.from_surface(self.image)
         #creamos un rectangulo a partir de la imagen
         self.rect = self.image.get_rect()
