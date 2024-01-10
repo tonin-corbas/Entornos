@@ -41,7 +41,7 @@ class Nave (pygame.sprite.Sprite):
         elif teclas[pygame.K_RIGHT]:
             self.rect.x += 2
             self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
-        if teclas[pygame.K_SPACE]:
+        if teclas[pygame.K_UP]:
             self.disparar(grupo_sprites_todos, grupo_sprites_bala)
         #gestionamos la animación
         self.contador_imagen = (self.contador_imagen + 1) % 40
@@ -52,7 +52,7 @@ class Nave (pygame.sprite.Sprite):
         #variable running
         running = args[4]
         #detectar colisiones
-        enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos,pygame.sprite.collide_mask)
+        enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos, pygame.sprite.collide_mask)
         if enemigo_colision:
             enemigo_colision.kill()
             running[0] = False
@@ -99,6 +99,13 @@ class Fondo(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         # actualizar la posición del rectangulo para que coincida con "posicion"
         self.rect.topleft = (0, 0)
+
+    #def update(self, *args: any, **kwargs: any) -> None:
+      #self.rect.y +=1
+      #capturamos pantalla
+      #pantalla = pygame.display.get_surface()
+      #if self.rect.y >= pantalla.get_height():
+          #self.rect.y = - pantalla.get_height()
 
 class Bala(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
