@@ -11,7 +11,7 @@ pantalla = pygame.display.set_mode(tamanio)
 
 #creamos un reloj
 reloj = pygame.time.Clock()
-FPS = 100
+FPS = 18
 
 # creamos una fuente para la pausa
 font = pygame.font.Font(None, 30)
@@ -40,7 +40,7 @@ font = pygame.font.Font(None, 30)
 
 #crear u na variable que almacene la última creacion de enemigo
 ultimo_enemigo_creado = 0
-frecuencia_creacion_enemigo = 1500
+frecuencia_creacion_enemigo = 750
 
 def set_difficulty(value, difficulty):
     # Do the job here !

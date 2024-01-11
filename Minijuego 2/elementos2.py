@@ -36,16 +36,16 @@ class Nave (pygame.sprite.Sprite):
         grupo_sprites_bala = args[2]
         #gestionamos la teclas
         if teclas[pygame.K_LEFT]:
-            self.rect.x -= 2
+            self.rect.x -= 10
             self.rect.x = max(0, self.rect.x)
         elif teclas[pygame.K_RIGHT]:
-            self.rect.x += 2
+            self.rect.x += 10
             self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
         if teclas[pygame.K_UP]:
             self.disparar(grupo_sprites_todos, grupo_sprites_bala)
         #gestionamos la animación
-        self.contador_imagen = (self.contador_imagen + 1) % 40
-        self.indice_imagen = self.contador_imagen // 20
+        self.contador_imagen = (self.contador_imagen + 5) % 40
+        self.indice_imagen = self.contador_imagen // 30
         self.image = self.imagenes2[self.indice_imagen]
         #Capturar grupo sprites enemigos 3
         grupo_sprites_enemigos = args[3]
@@ -72,7 +72,7 @@ class Enemigo(pygame.sprite.Sprite):
 
     def update(self, *args: any, **kwargs: any):
         pantalla = pygame.display.get_surface()
-        self.rect.y += 1
+        self.rect.y += 5
         self.rect.x = max(0, self.rect.x)
         self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
         if (self.rect.y > pantalla.get_height()):
@@ -117,4 +117,4 @@ class Bala(pygame.sprite.Sprite):
         self.rect.center = posicion
 
     def update(self, *args: any, **kwargs: any) -> None:
-        self.rect.y -=5
+        self.rect.y -=10
