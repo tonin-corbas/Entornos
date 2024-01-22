@@ -35,8 +35,8 @@ font = pygame.font.Font(None, 30)
 # # grupo_sprites_todos.add(elementos2.Fondo, (0, ))
 # grupo_sprites_todos.add(fondo)
 # grupo_sprites_todos.add(nave)
-#enemigo = elementos2.Enemigo((50,50))
-#grupo_sprites.add(elementos2.Enemigo((70, 70)))
+# enemigo = elementos2.Enemigo((50,50))
+# grupo_sprites.add(elementos2.Enemigo((70, 70)))
 
 #crear u na variable que almacene la última creacion de enemigo
 ultimo_enemigo_creado = 0
