@@ -5,7 +5,7 @@ class Nave (pygame.sprite.Sprite):
     def __init__(self, posicion):
         super().__init__()
         self.naves = [pygame.image.load("navejuego.png"), pygame.image.load("navejuego3.png")]
-        self.naves2 = [pygame.transform.scale(self.naves[0], (70, 100)),  pygame.transform.scale(self.naves[1], (70, 100))]
+        self.naves2 = [pygame.transform.scale(self.naves[0], (10, 60)),  pygame.transform.scale(self.naves[1], (10, 60))]
         self.indice_naves = 0
         self.image = self.naves2[self.indice_naves]
         self.mask = pygame.mask.from_surface(self.image)
@@ -46,8 +46,6 @@ class Nave (pygame.sprite.Sprite):
         self.image = self.naves[self.indice_naves]
         # Capturar grupo sprites enemigos 3
         grupo_sprites_enemigos = args[3]
-
-
         running = args[4]
         # detectar colisiones
         enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos, pygame.sprite.collide_mask)

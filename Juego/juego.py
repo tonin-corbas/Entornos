@@ -17,7 +17,6 @@ ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
 
 def set_difficulty(value, difficulty):
-    # Do the job here !
     global frecuencia_creacion_enemigo
     frecuencia_creacion_enemigo = difficulty
     pass
