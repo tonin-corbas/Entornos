@@ -5,10 +5,9 @@ class Nave (pygame.sprite.Sprite):
     def __init__(self, posicion):
         super().__init__()
         self.naves = [pygame.image.load("navejuego.png"), pygame.image.load("navejuego3.png")]
-        self.naves2 = [pygame.transform.scale(self.naves[0], (10, 60)),  pygame.transform.scale(self.naves[1], (10, 60))]
+        self.naves2 = [pygame.transform.scale(self.naves[0], (106.5, 110.5)),  pygame.transform.scale(self.naves[1], (106.5, 80))]
         self.indice_naves = 0
         self.image = self.naves2[self.indice_naves]
-        self.mask = pygame.mask.from_surface(self.image)
         self.contador_nave = 0
         # Rectangulo a partir de la nave
         self.rect = self.image.get_rect()
@@ -24,34 +23,58 @@ class Nave (pygame.sprite.Sprite):
             self.ultimo_tiro = actualidad
 
     def  update(self, *args, **kwargs) -> None:
+        # miramos teclas
         teclas = args[0]
         # miramos la pantallla
         pantalla = pygame.display.get_surface()
-        # miramos teclas
         grupo_sprites_todos = args[1]
         # miarmos balas
         grupo_sprites_bala = args[2]
+        # Capturar grupo sprites enemigos 3
+        grupo_sprites_enemigos = args[3]
+        # miramos el run
+        running = args[4]
+
         # Preparamos las teclas
         if teclas[pygame.K_LEFT] or teclas[pygame.K_a]:
-            self.rect.x -= 10
+            self.rect.x -= 20
             self.rect.x = max(0, self.rect.x)
         if teclas[pygame.K_RIGHT] or teclas[pygame.K_d]:
-            self.rect.x += 10
+            self.rect.x += 20
             self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
         if teclas[pygame.K_UP] or teclas[pygame.K_b]:
             self.disparar(grupo_sprites_todos, grupo_sprites_bala)
         # Hacemos la transicion de sprites
         self.contador_nave = (self.contador_nave + 5) % 40
         self.indice_naves = self.contador_nave // 30
-        self.image = self.naves[self.indice_naves]
-        # Capturar grupo sprites enemigos 3
-        grupo_sprites_enemigos = args[3]
-        running = args[4]
+        self.image = self.naves2[self.indice_naves]
+        self.mask = pygame.mask.from_surface(self.image)
         # detectar colisiones
         enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos, pygame.sprite.collide_mask)
         if enemigo_colision:
             enemigo_colision.kill()
+            self.kill()
             running[0] = False
+
+class Planeta(pygame.sprite.Sprite):
+    def __init__(self, posicion) -> None:
+        super().__init__()
+#         Cargamos imagen imagen del planeta
+        planeta = pygame.image.load("planet.png")
+        self.image = pygame.transform.scale(planeta, (2200,1150))
+        self.mask = pygame.mask.from_surface((self.image))
+        self.rect = self.image.get_rect()
+        self.rect.topleft = posicion
+
+    def update(self, *args: any, **kwargs: any):
+        grupo_sprites_enemigos = args[3]
+        running = args[4]
+        enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos, pygame.sprite.collide_mask)
+        if enemigo_colision:
+            enemigo_colision.kill()
+            running[0] = False
+
+
 
 class Enemigo(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
@@ -68,7 +91,7 @@ class Enemigo(pygame.sprite.Sprite):
 
     def update(self, *args: any, **kwargs: any):
         pantalla = pygame.display.get_surface()
-        self.rect.y += 5
+        self.rect.y += 2
         self.rect.x = max(0, self.rect.x)
         self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
         if (self.rect.y > pantalla.get_height()):
@@ -86,7 +109,7 @@ class Fondo(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
         # cargamos la imagen
-        imagen = pygame.image.load("fondo.jpg")
+        imagen = pygame.image.load("fondo2.png")
         #pantalla
         pantalla = pygame.display.get_surface()
         self.image = pygame.transform.scale(imagen, (pantalla.get_width(), imagen.get_height()))
@@ -95,12 +118,6 @@ class Fondo(pygame.sprite.Sprite):
         # actualizar la posición del rectangulo para que coincida con "posicion"
         self.rect.topleft = (0, 0)
 
-    #def update(self, *args: any, **kwargs: any) -> None:
-      #self.rect.y +=1
-      #capturamos pantalla
-      #pantalla = pygame.display.get_surface()
-      #if self.rect.y >= pantalla.get_height():
-          #self.rect.y = - pantalla.get_height()
 
 class Bala(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
