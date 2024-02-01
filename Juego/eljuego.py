@@ -54,7 +54,7 @@ class Nave (pygame.sprite.Sprite):
         if (teclas[pygame.K_DOWN] or teclas[pygame.K_s]) and not planeta_colision:
             self.rect.y += 20
             self.rect.y = min(pantalla.get_width() - self.image.get_width(), self.rect.y)
-        if teclas[pygame.K_p] or teclas[pygame.K_b]:
+        if teclas[pygame.K_SPACE]:
             self.disparar(grupo_sprites_todos, grupo_sprites_bala)
         # Hacemos la transicion de sprites
         self.contador_nave = (self.contador_nave + 5) % 40
@@ -99,13 +99,17 @@ class Enemigo(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         #actualizar la posición del rectangulo para que coincida con "posicion"
         self.rect.topleft = posicion
+        self.velocidad_x = 10
+        self.velocidad = 80
+        self.width = self.image.get_width()
 
     def update(self, *args: any, **kwargs: any):
         pantalla = pygame.display.get_surface()
-        self.rect.y += 2
-        self.rect.x = max(0, self.rect.x)
-        self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
-        if (self.rect.y > pantalla.get_height()):
+        self.rect.x += self.velocidad_x
+        if self.rect.right >= pantalla.get_width() or self.rect.left <= 0:
+            self.velocidad_x *= -1
+            self.rect.y += self.velocidad
+        if self.rect.bottom >= pantalla.get_height():
             self.kill()
 
         #capturar arg 2 bala

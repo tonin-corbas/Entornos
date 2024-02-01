@@ -75,20 +75,44 @@ def start_the_game():
         if teclas[pygame.K_ESCAPE]:
             running[0] = False
 
-        if teclas[pygame.K_SPACE]:
+        if teclas[pygame.K_p]:
             pausado = not pausado
 
 
         if not pausado:
             # creacion de enemigos
-            momento_actual = pygame.time.get_ticks()
-            if (momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo):
-                cordX = random.randint(0, screen.get_width())
-                cordY = 0
-                enemigo = eljuego.Enemigo((cordX, cordY))
-                grupo_sprites_enemigos.add(enemigo)
-                grupo_sprites_todos.add(enemigo)
-                ultimo_enemigo_creado = momento_actual
+            numero_enemigos = 1
+            enemigos_por_fila = 1
+            enemigos_creados = 0
+            enemigos_bajados = 0
+
+            # ...
+
+            if not pausado:
+                # creacion de enemigos
+                momento_actual = pygame.time.get_ticks()
+                if enemigos_creados < numero_enemigos and (
+                        momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo):
+                    for i in range(enemigos_por_fila):
+                        cordX = i * (screen.get_width() / enemigos_por_fila)
+                        cordY = 0
+                        enemigo = eljuego.Enemigo((cordX, cordY))
+                        grupo_sprites_enemigos.add(enemigo)
+                        grupo_sprites_todos.add(enemigo)
+                        enemigos_creados += 1
+                    ultimo_enemigo_creado = momento_actual
+
+                # Comprobar si todos los enemigos de una fila han bajado
+                for enemigo in grupo_sprites_enemigos:
+                    if enemigo.rect.y > screen.get_height() / 2:
+                        enemigos_bajados += 1
+                        grupo_sprites_enemigos.remove(enemigo)
+                        grupo_sprites_todos.remove(enemigo)
+
+                # Si todos los enemigos de una fila han bajado, resetea los contadores
+                if enemigos_bajados == enemigos_por_fila:
+                    enemigos_creados = 0
+                    enemigos_bajados = 0
 
             grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
                                            running, grupo_sprites_planeta)
