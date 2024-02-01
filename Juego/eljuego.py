@@ -13,11 +13,12 @@ class Nave (pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = posicion
         self.ultimo_tiro = 0
+        self.mask = pygame.mask.from_surface(self.image)
 
     def disparar(self,grupo_sprites_todos, grupo_sprites_bala):
         actualidad = pygame.time.get_ticks()
         if actualidad > self.ultimo_tiro + 200:
-            bala = Bala((self.rect.x + self.image.get_width() / 2, self.rect.y + self.image.get_width() / 2))
+            bala = Bala((self.rect.x + self.image.get_width() / 2, self.rect.y + self.image.get_width() / 5))
             grupo_sprites_bala.add(bala)
             grupo_sprites_todos.add(bala)
             self.ultimo_tiro = actualidad
@@ -34,37 +35,47 @@ class Nave (pygame.sprite.Sprite):
         grupo_sprites_enemigos = args[3]
         # miramos el run
         running = args[4]
+        # grupo sprites planeta
+        grupo_sprites_planeta = args[5]
+
+        # planeta colision
+        planeta_colision = pygame.sprite.spritecollideany(self, grupo_sprites_planeta, pygame.sprite.collide_mask)
 
         # Preparamos las teclas
-        if teclas[pygame.K_LEFT] or teclas[pygame.K_a]:
+        if (teclas[pygame.K_LEFT] or teclas[pygame.K_a]) and not planeta_colision:
             self.rect.x -= 20
             self.rect.x = max(0, self.rect.x)
-        if teclas[pygame.K_RIGHT] or teclas[pygame.K_d]:
+        if (teclas[pygame.K_RIGHT] or teclas[pygame.K_d]) and not planeta_colision:
             self.rect.x += 20
             self.rect.x = min(pantalla.get_width() - self.image.get_width(), self.rect.x)
-        if teclas[pygame.K_UP] or teclas[pygame.K_b]:
+        if teclas[pygame.K_UP] or teclas[pygame.K_w]:
+            self.rect.y -= 20
+            self.rect.y = max(0, self.rect.y)
+        if (teclas[pygame.K_DOWN] or teclas[pygame.K_s]) and not planeta_colision:
+            self.rect.y += 20
+            self.rect.y = min(pantalla.get_width() - self.image.get_width(), self.rect.y)
+        if teclas[pygame.K_p] or teclas[pygame.K_b]:
             self.disparar(grupo_sprites_todos, grupo_sprites_bala)
         # Hacemos la transicion de sprites
         self.contador_nave = (self.contador_nave + 5) % 40
         self.indice_naves = self.contador_nave // 30
         self.image = self.naves2[self.indice_naves]
-        self.mask = pygame.mask.from_surface(self.image)
         # detectar colisiones
         enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos, pygame.sprite.collide_mask)
         if enemigo_colision:
             enemigo_colision.kill()
-            self.kill()
             running[0] = False
+
 
 class Planeta(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
 #         Cargamos imagen imagen del planeta
         planeta = pygame.image.load("planet.png")
-        self.image = pygame.transform.scale(planeta, (2200,1150))
+        self.image = pygame.transform.scale(planeta, (2200,1250))
         self.mask = pygame.mask.from_surface((self.image))
         self.rect = self.image.get_rect()
-        self.rect.topleft = posicion
+        self.rect.center = posicion
 
     def update(self, *args: any, **kwargs: any):
         grupo_sprites_enemigos = args[3]
@@ -81,7 +92,7 @@ class Enemigo(pygame.sprite.Sprite):
         super().__init__()
         #cargamos la imagen
         imagen = pygame.image.load("avion4.png")
-        imagen2 = pygame.transform.scale(imagen, (80, 140))
+        imagen2 = pygame.transform.scale(imagen, (47.5, 90.5))
         self.image = pygame.transform.rotate(imagen2, 180)
         self.mask = pygame.mask.from_surface(self.image)
         #creamos un rectangulo a partir de la imagen

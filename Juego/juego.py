@@ -18,16 +18,21 @@ font = pygame.font.Font(None, 30)
 fondo = eljuego.Fondo()
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
+screen_actual = False
 
 def set_difficulty(value, difficulty):
     global frecuencia_creacion_enemigo
     frecuencia_creacion_enemigo = difficulty
 
-def set_screen(value, screen_type, size):
-    print("screen_type" + str(screen_type))
-    print("size" + str(size))
-    global screen
-    screen = pygame.display.set_mode(size, screen_type)
+# def set_screen(value, screen_type, size):
+#     global screen
+#     global screen_actual
+#     if screen_actual:
+#         screen = pygame.display.set_mode(espacio)
+#     else:
+#         screen = pygame.display.set_mode(espacio_pequeno)
+#     pygame.display.toggle_fullscreen()
+#     screen_actual = not screen_actual
 
 
 def start_the_game():
@@ -38,7 +43,8 @@ def start_the_game():
     global FPS
     global reloj
     posicion = (250, 350)
-    posicionP = (-300, 700)
+    posicionP = (screen.get_width() / 2.025, screen.get_height() * 1.5)
+    # screen.get_width() / 2, screen.get_height() * 1.75
     nave = eljuego.Nave(posicion)
     fondo = eljuego.Fondo()
     planeta = eljuego.Planeta(posicionP)
@@ -46,10 +52,13 @@ def start_the_game():
     grupo_sprites_todos = pygame.sprite.Group()
     grupo_sprites_enemigos = pygame.sprite.Group()
     grupo_sprites_bala = pygame.sprite.Group()
+    grupo_sprites_planeta = pygame.sprite.Group()
 
     grupo_sprites_todos.add(fondo)
-    grupo_sprites_todos.add(nave)
     grupo_sprites_todos.add(planeta)
+    grupo_sprites_todos.add(nave)
+    grupo_sprites_planeta.add(planeta)
+
 
     pausado = False
 
@@ -82,7 +91,7 @@ def start_the_game():
                 ultimo_enemigo_creado = momento_actual
 
             grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
-                                           running)
+                                           running, grupo_sprites_planeta)
         grupo_sprites_todos.draw(screen)
 
         if pausado:
@@ -97,7 +106,7 @@ menu = pygame_menu.Menu('Welcome', 400, 300, theme=pygame_menu.themes.THEME_BLUE
 
 menu.add.text_input('Name :', default='')
 menu.add.selector('Difficulty :', [('Hard', 200), ('Easy', 2000)], onchange=set_difficulty)
-menu.add.selector('Pantalla :', [('Completa', pygame.FULLSCREEN, espacio), ('Ventana', pygame.SHOWN, espacio_pequeno)], onchange=set_screen)
+# menu.add.selector('Pantalla :', [('Completa', pygame.FULLSCREEN, espacio), ('Ventana', pygame.SHOWN, espacio_pequeno)], onchange=set_screen)
 menu.add.button('Play', start_the_game)
 menu.add.button('Quit', pygame_menu.events.EXIT)
 
