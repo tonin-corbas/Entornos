@@ -42,6 +42,12 @@ def start_the_game():
     global frecuencia_creacion_enemigo
     global FPS
     global reloj
+
+    vida = 3
+    puntuacion = 0
+
+    parametros = eljuego.Parametros()
+
     posicion = (250, 350)
     posicionP = (screen.get_width() / 2.025, screen.get_height() * 1.5)
     # screen.get_width() / 2, screen.get_height() * 1.75
@@ -115,8 +121,14 @@ def start_the_game():
                     enemigos_bajados = 0
 
             grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
-                                           running, grupo_sprites_planeta)
+                                           running, grupo_sprites_planeta, parametros)
         grupo_sprites_todos.draw(screen)
+
+        vidas = font.render(f"Vidas: {parametros.getVidas()}", True, "White")
+        screen.blit(vidas, (10, 20))
+        puntos = font.render(f"Puntos: {parametros.getPuntuacion()} ", True, "White")
+        screen.blit(puntos, (10, 40))
+
 
         if pausado:
             texto = font.render("PAUSA", True, "White")

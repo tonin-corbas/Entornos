@@ -62,8 +62,13 @@ class Nave (pygame.sprite.Sprite):
         self.image = self.naves2[self.indice_naves]
         # detectar colisiones
         enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_enemigos, pygame.sprite.collide_mask)
+        parametros = args[6]
         if enemigo_colision:
             enemigo_colision.kill()
+            parametros.restarVida()
+            parametros.restarPuntuacion()
+
+        if parametros.getVidas() < 0:
             running[0] = False
 
 
@@ -91,9 +96,12 @@ class Enemigo(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
         #cargamos la imagen
-        imagen = pygame.image.load("avion4.png")
-        imagen2 = pygame.transform.scale(imagen, (47.5, 90.5))
-        self.image = pygame.transform.rotate(imagen2, 180)
+        self.enemigos = [pygame.image.load("avion4.png"), pygame.image.load("avion5.png")]
+        self.enemigos2 = [pygame.transform.scale(self.enemigos[0], (47.5, 90.5)),
+                       pygame.transform.scale(self.enemigos[1], (42.5, 93.5))]
+        self.manolos = [pygame.transform.rotate(self.enemigos[0], 180), pygame.transform.rotate( self.enemigos[1], 180)]
+        self.indice_manolos = 0
+        self.image = self.manolos[self.indice_manolos]
         self.mask = pygame.mask.from_surface(self.image)
         #creamos un rectangulo a partir de la imagen
         self.rect = self.image.get_rect()
@@ -116,9 +124,11 @@ class Enemigo(pygame.sprite.Sprite):
         grupo_sprites_bala = args[2]
         grupo_sprites_todos = args[1]
         bala_colision = pygame.sprite.spritecollideany(self, grupo_sprites_bala, pygame.sprite.collide_mask)
+        parametros = args[6]
         if bala_colision:
             self.kill()
             bala_colision.kill()
+            parametros.sumarPuntuacion()
 
 class Fondo(pygame.sprite.Sprite):
     def __init__(self) -> None:
@@ -145,3 +155,25 @@ class Bala(pygame.sprite.Sprite):
 
     def update(self, *args: any, **kwargs: any) -> None:
         self.rect.y -=10
+class Parametros():
+    def __init__(self):
+        self.puntuacion = 0
+        self.vidas = 3
+
+    def restarVida(self):
+        self.vidas -= 1
+
+    def sumarVida(self):
+        self.vidas += 1
+
+    def restarPuntuacion(self):
+        self.puntuacion -= 100
+
+    def sumarPuntuacion(self):
+        self.puntuacion += 100
+
+    def getVidas(self):
+        return self.vidas
+
+    def getPuntuacion(self):
+        return self.puntuacion
