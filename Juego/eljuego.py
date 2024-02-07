@@ -1,11 +1,13 @@
 import pygame
 
-class Nave (pygame.sprite.Sprite):
+
+class Nave(pygame.sprite.Sprite):
     # Hacemos el contructor
     def __init__(self, posicion):
         super().__init__()
         self.naves = [pygame.image.load("navejuego.png"), pygame.image.load("navejuego3.png")]
-        self.naves2 = [pygame.transform.scale(self.naves[0], (106.5, 110.5)),  pygame.transform.scale(self.naves[1], (106.5, 80))]
+        self.naves2 = [pygame.transform.scale(self.naves[0], (106.5, 110.5)),
+                       pygame.transform.scale(self.naves[1], (106.5, 80))]
         self.indice_naves = 0
         self.image = self.naves2[self.indice_naves]
         self.contador_nave = 0
@@ -15,7 +17,7 @@ class Nave (pygame.sprite.Sprite):
         self.ultimo_tiro = 0
         self.mask = pygame.mask.from_surface(self.image)
 
-    def disparar(self,grupo_sprites_todos, grupo_sprites_bala):
+    def disparar(self, grupo_sprites_todos, grupo_sprites_bala):
         actualidad = pygame.time.get_ticks()
         if actualidad > self.ultimo_tiro + 200:
             bala = Bala((self.rect.x + self.image.get_width() / 2, self.rect.y + self.image.get_width() / 5))
@@ -23,7 +25,7 @@ class Nave (pygame.sprite.Sprite):
             grupo_sprites_todos.add(bala)
             self.ultimo_tiro = actualidad
 
-    def  update(self, *args, **kwargs) -> None:
+    def update(self, *args, **kwargs) -> None:
         # miramos teclas
         teclas = args[0]
         # miramos la pantallla
@@ -75,9 +77,9 @@ class Nave (pygame.sprite.Sprite):
 class Planeta(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
-#         Cargamos imagen imagen del planeta
+        #         Cargamos imagen imagen del planeta
         planeta = pygame.image.load("planet.png")
-        self.image = pygame.transform.scale(planeta, (2200,1250))
+        self.image = pygame.transform.scale(planeta, (2200, 1250))
         self.mask = pygame.mask.from_surface((self.image))
         self.rect = self.image.get_rect()
         self.rect.center = posicion
@@ -91,23 +93,24 @@ class Planeta(pygame.sprite.Sprite):
             running[0] = False
 
 
-
 class Enemigo(pygame.sprite.Sprite):
     def __init__(self, posicion) -> None:
         super().__init__()
-        #cargamos la imagen
+        # cargamos la imagen
         self.enemigos = [pygame.image.load("avion4.png"), pygame.image.load("avion5.png")]
-        self.enemigos2 = [pygame.transform.scale(self.enemigos[0], (47.5, 90.5)),
-                       pygame.transform.scale(self.enemigos[1], (42.5, 93.5))]
-        self.manolos = [pygame.transform.rotate(self.enemigos[0], 180), pygame.transform.rotate( self.enemigos[1], 180)]
+        self.enemigos2 = [pygame.transform.scale(self.enemigos[0], (95 / 2, 181 / 2)),
+                       pygame.transform.scale(self.enemigos[1], (85 / 2, 187 / 2))]
+        self.manolos = [pygame.transform.rotate(self.enemigos2[0], 180), pygame.transform.rotate(self.enemigos2[1], 180)]
         self.indice_manolos = 0
+        self.contador_manolos = 0
         self.image = self.manolos[self.indice_manolos]
         self.mask = pygame.mask.from_surface(self.image)
-        #creamos un rectangulo a partir de la imagen
+        # creamos un rectangulo a partir de la imagen
         self.rect = self.image.get_rect()
-        #actualizar la posición del rectangulo para que coincida con "posicion"
+        # actualizar la posición del rectangulo para que coincida con "posicion"
         self.rect.topleft = posicion
-        self.velocidad_x = 10
+        from Juego.juego import velocidad_enemigo
+        self.velocidad_x = velocidad_enemigo
         self.velocidad = 80
         self.width = self.image.get_width()
 
@@ -119,8 +122,11 @@ class Enemigo(pygame.sprite.Sprite):
             self.rect.y += self.velocidad
         if self.rect.bottom >= pantalla.get_height():
             self.kill()
+        self.contador_manolos = (self.contador_manolos + 3) % 20
+        self.indice_manolos = self.contador_manolos // 10
+        self.image = self.manolos[self.indice_manolos]
 
-        #capturar arg 2 bala
+        # capturar arg 2 bala
         grupo_sprites_bala = args[2]
         grupo_sprites_todos = args[1]
         bala_colision = pygame.sprite.spritecollideany(self, grupo_sprites_bala, pygame.sprite.collide_mask)
@@ -130,12 +136,13 @@ class Enemigo(pygame.sprite.Sprite):
             bala_colision.kill()
             parametros.sumarPuntuacion()
 
+
 class Fondo(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super().__init__()
         # cargamos la imagen
         imagen = pygame.image.load("fondo2.png")
-        #pantalla
+        # pantalla
         pantalla = pygame.display.get_surface()
         self.image = pygame.transform.scale(imagen, (pantalla.get_width(), imagen.get_height()))
         # creamos un rectangulo a partir de la imagen
@@ -154,7 +161,9 @@ class Bala(pygame.sprite.Sprite):
         self.rect.center = posicion
 
     def update(self, *args: any, **kwargs: any) -> None:
-        self.rect.y -=10
+        self.rect.y -= 10
+
+
 class Parametros():
     def __init__(self):
         self.puntuacion = 0
@@ -170,7 +179,7 @@ class Parametros():
         self.puntuacion -= 100
 
     def sumarPuntuacion(self):
-        self.puntuacion += 100
+        self.puntuacion += 50
 
     def getVidas(self):
         return self.vidas

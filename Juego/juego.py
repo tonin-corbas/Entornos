@@ -1,6 +1,5 @@
 import pygame
 import eljuego
-import random
 import pygame_menu
 
 pygame.init()
@@ -18,22 +17,18 @@ font = pygame.font.Font(None, 30)
 fondo = eljuego.Fondo()
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
+velocidad_enemigo = 10
 screen_actual = False
 
 def set_difficulty(value, difficulty):
     global frecuencia_creacion_enemigo
+    global velocidad_enemigo
     frecuencia_creacion_enemigo = difficulty
 
-# def set_screen(value, screen_type, size):
-#     global screen
-#     global screen_actual
-#     if screen_actual:
-#         screen = pygame.display.set_mode(espacio)
-#     else:
-#         screen = pygame.display.set_mode(espacio_pequeno)
-#     pygame.display.toggle_fullscreen()
-#     screen_actual = not screen_actual
-
+    if difficulty == 200:
+        velocidad_enemigo = 15
+    else:
+        velocidad_enemigo = 10
 
 def start_the_game():
     # Do the job here !
@@ -92,8 +87,6 @@ def start_the_game():
             enemigos_creados = 0
             enemigos_bajados = 0
 
-            # ...
-
             if not pausado:
                 # creacion de enemigos
                 momento_actual = pygame.time.get_ticks()
@@ -138,13 +131,12 @@ def start_the_game():
         pygame.display.flip()
     pass
 
-menu = pygame_menu.Menu('Welcome', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
+menu = pygame_menu.Menu('Buenas', 400, 300, theme=pygame_menu.themes.THEME_BLUE)
 
-menu.add.text_input('Name :', default='')
-menu.add.selector('Difficulty :', [('Hard', 200), ('Easy', 2000)], onchange=set_difficulty)
-# menu.add.selector('Pantalla :', [('Completa', pygame.FULLSCREEN, espacio), ('Ventana', pygame.SHOWN, espacio_pequeno)], onchange=set_screen)
-menu.add.button('Play', start_the_game)
-menu.add.button('Quit', pygame_menu.events.EXIT)
+menu.add.text_input('ID :', default='')
+menu.add.selector('Dificultad :', [('Fácil', 2000), ('Difícil', 200)], onchange=set_difficulty)
+menu.add.button('Jogar', start_the_game)
+menu.add.button('Finalizar', pygame_menu.events.EXIT)
 
 menu.mainloop(screen)
 pygame.quit()
