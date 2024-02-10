@@ -10,25 +10,28 @@ FPS = 18
 
 # Creamos la pantalla
 espacio = (1920,1080)
-espacio_pequeno = (1920/2,1080/2)
 screen = pygame.display.set_mode(espacio, pygame.FULLSCREEN)
 # pantalla = pygame.display.set_mode((1000, 800))
 font = pygame.font.Font(None, 30)
 fondo = eljuego.Fondo()
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
+frecuencia_disparo_enemigo = 15
 velocidad_enemigo = 10
 screen_actual = False
 
 def set_difficulty(value, difficulty):
     global frecuencia_creacion_enemigo
     global velocidad_enemigo
+    global frecuencia_disparo_enemigo
     frecuencia_creacion_enemigo = difficulty
 
     if difficulty == 200:
         velocidad_enemigo = 15
+        frecuencia_disparo_enemigo = 50
     else:
         velocidad_enemigo = 10
+        frecuencia_disparo_enemigo = 10
 
 def start_the_game():
     # Do the job here !
@@ -54,6 +57,7 @@ def start_the_game():
     grupo_sprites_enemigos = pygame.sprite.Group()
     grupo_sprites_bala = pygame.sprite.Group()
     grupo_sprites_planeta = pygame.sprite.Group()
+    grupo_sprites_bala_enemigo = pygame.sprite.Group()
 
     grupo_sprites_todos.add(fondo)
     grupo_sprites_todos.add(planeta)
@@ -95,7 +99,7 @@ def start_the_game():
                     for i in range(enemigos_por_fila):
                         cordX = i * (screen.get_width() / enemigos_por_fila)
                         cordY = 0
-                        enemigo = eljuego.Enemigo((cordX, cordY))
+                        enemigo = eljuego.Enemigo((cordX, cordY), velocidad_enemigo, grupo_sprites_planeta)
                         grupo_sprites_enemigos.add(enemigo)
                         grupo_sprites_todos.add(enemigo)
                         enemigos_creados += 1
@@ -114,7 +118,7 @@ def start_the_game():
                     enemigos_bajados = 0
 
             grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
-                                           running, grupo_sprites_planeta, parametros)
+                                           running, grupo_sprites_planeta, parametros, grupo_sprites_bala_enemigo)
         grupo_sprites_todos.draw(screen)
 
         vidas = font.render(f"Vidas: {parametros.getVidas()}", True, "White")
