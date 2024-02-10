@@ -1,14 +1,20 @@
 import pygame
-import eljuego
+import elementos
 import pygame_menu
-import random
 
-pygame.mixer.init()
-
-sonido_disparo = pygame.mixer.Sound("SpaceLaserShot PE1095407.wav")
 
 pygame.init()
 
+# pygame.mixer.init()
+#
+# #  Cargamos los sonidos de game over y disparo de nave
+# sonido_disparo = pygame.mixer.Sound("SpaceLaserShot PE1095407.wav")
+# sonido_game_over = pygame.mixer.Sound("game-over-super-mario-made-with-Voicemod.mp3")
+#
+# # Cargamos y ajustamos la música de fondo
+# pygame.mixer.music.load("cyberpunk-150207.mp3")
+# pygame.mixer.music.set_volume(0.5)
+# pygame.mixer.music.play(-1) # El argumento -1 indica reproducción en bucle
 # Creamos un reloj para los FPS
 reloj = pygame.time.Clock()
 FPS = 18
@@ -18,7 +24,7 @@ espacio = (1920,1080)
 screen = pygame.display.set_mode(espacio, pygame.FULLSCREEN)
 # pantalla = pygame.display.set_mode((1000, 800))
 font = pygame.font.Font(None, 30)
-fondo = eljuego.Fondo()
+# fondo = eljuego.Fondo()
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
 velocidad_enemigo = 10
@@ -67,22 +73,20 @@ def game_over(parametros):
 
 def start_the_game():
     # Do the job here !
+
     running = [True]
     global ultimo_enemigo_creado
     global frecuencia_creacion_enemigo
     global FPS
     global reloj
 
-    enemigo_fuerte_creado = False
-
-    parametros = eljuego.Parametros()
-
     posicion = (screen.get_width() / 2, screen.get_height() / 1.5)
     posicionP = (screen.get_width() / 2.025, screen.get_height() * 1.5)
     # screen.get_width() / 2, screen.get_height() * 1.75
-    nave = eljuego.Nave(posicion)
-    fondo = eljuego.Fondo()
-    planeta = eljuego.Planeta(posicionP)
+    nave = elementos.Nave(posicion)
+    fondo = elementos.Fondo()
+    planeta = elementos.Planeta(posicionP)
+    parametros = elementos.Parametros()
 
     grupo_sprites_todos = pygame.sprite.Group()
     grupo_sprites_enemigos = pygame.sprite.Group()
@@ -127,7 +131,7 @@ def start_the_game():
                 for i in range(enemigos_por_fila):
                     cordX = i * (screen.get_width() / enemigos_por_fila)
                     cordY = 0
-                    enemigo = eljuego.Enemigo((cordX, cordY), velocidad_enemigo, grupo_sprites_planeta)
+                    enemigo = elementos.Enemigo((cordX, cordY), velocidad_enemigo, grupo_sprites_planeta)
                     grupo_sprites_enemigos.add(enemigo)
                     grupo_sprites_todos.add(enemigo)
                     enemigos_creados += 1
@@ -135,16 +139,6 @@ def start_the_game():
 
                 # Crear enemigo fuerte
             momento_actual = pygame.time.get_ticks()
-            if random.randint(1, 100) <= 5 and momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo:
-                cordX = random.randint(0, screen.get_width() - 95)
-                cordY = 0
-                enemigo_fuerte = eljuego.EnemigoFuerte((cordX, cordY), velocidad_enemigo, grupo_sprites_planeta,
-                                                       parametros)
-                enemigo_fuerte.frecuencia_disparo = frecuencia_disparo_enemigo
-                grupo_sprites_enemigos_fuertes.add(enemigo_fuerte)
-                grupo_sprites_todos.add(enemigo_fuerte)
-                enemigo_fuerte_creado = True
-                ultimo_enemigo_creado = momento_actual
 
         grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
                                            running, grupo_sprites_planeta, parametros, grupo_sprites_bala_enemigo, grupo_sprites_enemigos_fuertes)
