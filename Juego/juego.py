@@ -52,9 +52,7 @@ def game_over(parametros):
         if teclas[pygame.K_ESCAPE]:
             running[0] = False
 
-        # Puedes añadir más opciones o acciones según sea necesario
 
-        # Dibujar la pantalla de Game Over
         screen.fill((0, 0, 0))  # Fondo negro
 
         texto_game_over = font.render("¡Game Over!", True, "White")
