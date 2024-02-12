@@ -126,7 +126,6 @@ def start_the_game():
         if pausado:
             texto = font.render("PAUSA", True, "White")
             screen.blit(texto, (screen.get_width() / 2, screen.get_height() / 2))
-
         # redibujar la pantala
         pygame.display.flip()
     pass
