@@ -110,7 +110,7 @@ class Planeta(pygame.sprite.Sprite):
         super().__init__()
         # Cargamos imagen imagen del planeta
         planeta = pygame.image.load("planet.png")
-        self.image = pygame.transform.scale(planeta, (2200 * 1.5, 1250 * 1.2))
+        self.image = pygame.transform.scale(planeta, (2200, 1250))
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.center = posicion
