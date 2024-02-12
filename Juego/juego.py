@@ -1,20 +1,30 @@
 import pygame
-import eljuego
+import elementos
 import pygame_menu
+
 
 pygame.init()
 
+# pygame.mixer.init()
+#
+# #  Cargamos los sonidos de game over y disparo de nave
+# sonido_disparo = pygame.mixer.Sound("SpaceLaserShot PE1095407.wav")
+# sonido_game_over = pygame.mixer.Sound("game-over-super-mario-made-with-Voicemod.mp3")
+#
+# # Cargamos y ajustamos la música de fondo
+# pygame.mixer.music.load("cyberpunk-150207.mp3")
+# pygame.mixer.music.set_volume(0.5)
+# pygame.mixer.music.play(-1) # El argumento -1 indica reproducción en bucle
 # Creamos un reloj para los FPS
 reloj = pygame.time.Clock()
 FPS = 18
 
 # Creamos la pantalla
 espacio = (1920,1080)
-espacio_pequeno = (1920/2,1080/2)
 screen = pygame.display.set_mode(espacio, pygame.FULLSCREEN)
 # pantalla = pygame.display.set_mode((1000, 800))
 font = pygame.font.Font(None, 30)
-fondo = eljuego.Fondo()
+# fondo = eljuego.Fondo()
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
 velocidad_enemigo = 10
@@ -23,6 +33,7 @@ screen_actual = False
 def set_difficulty(value, difficulty):
     global frecuencia_creacion_enemigo
     global velocidad_enemigo
+    global frecuencia_disparo_enemigo
     frecuencia_creacion_enemigo = difficulty
 
     if difficulty == 200:
@@ -30,36 +41,64 @@ def set_difficulty(value, difficulty):
     else:
         velocidad_enemigo = 10
 
+def game_over(parametros):
+    running = [True]
+    while running[0]:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = [False]
+
+        teclas = pygame.key.get_pressed()
+        if teclas[pygame.K_ESCAPE]:
+            running[0] = False
+
+        # Puedes añadir más opciones o acciones según sea necesario
+
+        # Dibujar la pantalla de Game Over
+        screen.fill((0, 0, 0))  # Fondo negro
+
+        texto_game_over = font.render("¡Game Over!", True, "White")
+        screen.blit(texto_game_over, (screen.get_width() / 2 - 100, screen.get_height() / 2 - 50))
+
+        texto_puntuacion = font.render(f"Puntuación: {parametros.getPuntuacion()}", True, "White")
+        screen.blit(texto_puntuacion, (screen.get_width() / 2 - 100, screen.get_height() / 2))
+
+        texto_salir = font.render("Presiona ESC para salir", True, "White")
+        screen.blit(texto_salir, (screen.get_width() / 2 - 100, screen.get_height() / 2 + 50))
+
+        pygame.display.flip()
+
+    pygame.quit()
+    exit()
+
 def start_the_game():
     # Do the job here !
+
     running = [True]
     global ultimo_enemigo_creado
     global frecuencia_creacion_enemigo
     global FPS
     global reloj
 
-    vida = 3
-    puntuacion = 0
-
-    parametros = eljuego.Parametros()
-
-    posicion = (250, 350)
+    posicion = (screen.get_width() / 2, screen.get_height() / 1.5)
     posicionP = (screen.get_width() / 2.025, screen.get_height() * 1.5)
     # screen.get_width() / 2, screen.get_height() * 1.75
-    nave = eljuego.Nave(posicion)
-    fondo = eljuego.Fondo()
-    planeta = eljuego.Planeta(posicionP)
+    nave = elementos.Nave(posicion)
+    fondo = elementos.Fondo()
+    planeta = elementos.Planeta(posicionP)
+    parametros = elementos.Parametros()
 
     grupo_sprites_todos = pygame.sprite.Group()
     grupo_sprites_enemigos = pygame.sprite.Group()
     grupo_sprites_bala = pygame.sprite.Group()
     grupo_sprites_planeta = pygame.sprite.Group()
+    grupo_sprites_bala_enemigo = pygame.sprite.Group()
+    grupo_sprites_enemigos_fuertes = pygame.sprite.Group()
 
     grupo_sprites_todos.add(fondo)
     grupo_sprites_todos.add(planeta)
     grupo_sprites_todos.add(nave)
     grupo_sprites_planeta.add(planeta)
-
 
     pausado = False
 
@@ -85,42 +124,37 @@ def start_the_game():
             numero_enemigos = 1
             enemigos_por_fila = 1
             enemigos_creados = 0
-            enemigos_bajados = 0
-
-            if not pausado:
-                # creacion de enemigos
-                momento_actual = pygame.time.get_ticks()
-                if enemigos_creados < numero_enemigos and (
-                        momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo):
-                    for i in range(enemigos_por_fila):
-                        cordX = i * (screen.get_width() / enemigos_por_fila)
-                        cordY = 0
-                        enemigo = eljuego.Enemigo((cordX, cordY))
-                        grupo_sprites_enemigos.add(enemigo)
-                        grupo_sprites_todos.add(enemigo)
-                        enemigos_creados += 1
+            # creacion de enemigos
+            momento_actual = pygame.time.get_ticks()
+            if enemigos_creados < numero_enemigos and (
+                    momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo):
+                for i in range(enemigos_por_fila):
+                    cordX = i * (screen.get_width() / enemigos_por_fila)
+                    cordY = 0
+                    enemigo = elementos.Enemigo((cordX, cordY), velocidad_enemigo, grupo_sprites_planeta)
+                    grupo_sprites_enemigos.add(enemigo)
+                    grupo_sprites_todos.add(enemigo)
+                    enemigos_creados += 1
                     ultimo_enemigo_creado = momento_actual
 
-                # Comprobar si todos los enemigos de una fila han bajado
-                for enemigo in grupo_sprites_enemigos:
-                    if enemigo.rect.y > screen.get_height() / 2:
-                        enemigos_bajados += 1
-                        grupo_sprites_enemigos.remove(enemigo)
-                        grupo_sprites_todos.remove(enemigo)
+                # Crear enemigo fuerte
+            momento_actual = pygame.time.get_ticks()
 
-                # Si todos los enemigos de una fila han bajado, resetea los contadores
-                if enemigos_bajados == enemigos_por_fila:
-                    enemigos_creados = 0
-                    enemigos_bajados = 0
-
-            grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
-                                           running, grupo_sprites_planeta, parametros)
+        grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
+                                           running, grupo_sprites_planeta, parametros, grupo_sprites_bala_enemigo, grupo_sprites_enemigos_fuertes)
         grupo_sprites_todos.draw(screen)
 
         vidas = font.render(f"Vidas: {parametros.getVidas()}", True, "White")
         screen.blit(vidas, (10, 20))
         puntos = font.render(f"Puntos: {parametros.getPuntuacion()} ", True, "White")
         screen.blit(puntos, (10, 40))
+
+        planeta_colision = pygame.sprite.spritecollideany(nave, grupo_sprites_planeta, pygame.sprite.collide_mask)
+        if planeta_colision:
+            game_over(parametros)
+
+        if parametros.getVidas() < 0:
+            game_over(parametros)
 
 
         if pausado:
