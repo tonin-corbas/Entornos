@@ -12,7 +12,7 @@ sonido_game_over = pygame.mixer.Sound("game-over-super-mario-made-with-Voicemod.
 
 # Cargamos y ajustamos la música de fondo
 pygame.mixer.music.load("cyberpunk-150207.mp3")
-pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.set_volume(0.25)
 pygame.mixer.music.play(-1) # El argumento -1 indica reproducción en bucle
 # Creamos un reloj para los FPS
 reloj = pygame.time.Clock()
