@@ -1,8 +1,6 @@
 import pygame
 import random
 
-# from Juego.juego import sonido_game_over, sonido_disparo
-
 
 class Nave(pygame.sprite.Sprite):
     # Hacemos el contructor
@@ -19,6 +17,8 @@ class Nave(pygame.sprite.Sprite):
         self.rect.topleft = posicion
         self.ultimo_tiro = 0
         self.mask = pygame.mask.from_surface(self.image)
+        self.sonido_disparo = pygame.mixer.Sound("SpaceLaserShot PE1095407.wav")
+
 
     def disparar(self, grupo_sprites_todos, grupo_sprites_bala):
         actualidad = pygame.time.get_ticks()
@@ -27,8 +27,8 @@ class Nave(pygame.sprite.Sprite):
             grupo_sprites_bala.add(bala)
             grupo_sprites_todos.add(bala)
             self.ultimo_tiro = actualidad
-        # if actualidad > self.ultimo_tiro + 200:
-        #     sonido_disparo.play()
+        if actualidad > self.ultimo_tiro + 200:
+            self.sonido_disparo.play()
 
     def update(self, *args, **kwargs) -> None:
         # miramos teclas
@@ -82,7 +82,6 @@ class Nave(pygame.sprite.Sprite):
 
         if parametros.getVidas() < 0:
             running[0] = False
-            # sonido_game_over.play()
 
         bala_enemigo_colision = pygame.sprite.spritecollideany(self, grupo_sprites_bala_enemigo,
                                                                pygame.sprite.collide_mask)
@@ -122,7 +121,6 @@ def update(self, *args: any, **kwargs: any):
         if enemigo_colision:
             enemigo_colision.kill()
             running[0] = False
-            # sonido_game_over.play()
 
 
 class Enemigo(pygame.sprite.Sprite):
@@ -193,7 +191,6 @@ class Enemigo(pygame.sprite.Sprite):
         if planeta_colision:
             planeta_colision.kill()
             running[0] = False
-            # sonido_game_over.play()
 
         if not self.puede_disparar and actualidad > self.ultimo_disparo + self.frecuencia_disparo:
             self.puede_disparar = True

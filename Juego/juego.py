@@ -5,16 +5,15 @@ import pygame_menu
 
 pygame.init()
 
-# pygame.mixer.init()
-#
-# #  Cargamos los sonidos de game over y disparo de nave
-# sonido_disparo = pygame.mixer.Sound("SpaceLaserShot PE1095407.wav")
-# sonido_game_over = pygame.mixer.Sound("game-over-super-mario-made-with-Voicemod.mp3")
-#
-# # Cargamos y ajustamos la música de fondo
-# pygame.mixer.music.load("cyberpunk-150207.mp3")
-# pygame.mixer.music.set_volume(0.5)
-# pygame.mixer.music.play(-1) # El argumento -1 indica reproducción en bucle
+pygame.mixer.init()
+
+#  Cargamos los sonidos de game over y disparo de nave
+sonido_game_over = pygame.mixer.Sound("game-over-super-mario-made-with-Voicemod.mp3")
+
+# Cargamos y ajustamos la música de fondo
+pygame.mixer.music.load("cyberpunk-150207.mp3")
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1) # El argumento -1 indica reproducción en bucle
 # Creamos un reloj para los FPS
 reloj = pygame.time.Clock()
 FPS = 18
@@ -47,6 +46,8 @@ def game_over(parametros):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = [False]
+
+        sonido_game_over.play()
 
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_ESCAPE]:
