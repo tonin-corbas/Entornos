@@ -9,6 +9,8 @@ pygame.mixer.init()
 
 #  Cargamos los sonidos de game over y disparo de nave
 sonido_game_over = pygame.mixer.Sound("game-over-super-mario-made-with-Voicemod.mp3")
+sonido_disparo = pygame.mixer.Sound("LaserZapsFastByRev PE431403.wav")
+sonido_disparo.set_volume(0.20)
 
 # Cargamos y ajustamos la música de fondo
 pygame.mixer.music.load("cyberpunk-150207.mp3")
@@ -48,6 +50,7 @@ def game_over(parametros):
                 running = [False]
 
         sonido_game_over.play()
+        pygame.mixer.music.pause()  # El argumento -1 indica reproducción en bucle
 
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_ESCAPE]:
@@ -67,8 +70,9 @@ def game_over(parametros):
 
         pygame.display.flip()
 
-    pygame.quit()
-    exit()
+    pygame.mixer.music.play(-1)  # El argumento -1 indica reproducción en bucle
+    sonido_game_over.stop()
+
 
 def start_the_game():
     # Do the job here !
@@ -116,6 +120,9 @@ def start_the_game():
 
         if teclas[pygame.K_p]:
             pausado = not pausado
+
+        if teclas[pygame.K_SPACE]:
+            sonido_disparo.play()
 
 
         if not pausado:

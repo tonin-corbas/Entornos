@@ -17,7 +17,6 @@ class Nave(pygame.sprite.Sprite):
         self.rect.topleft = posicion
         self.ultimo_tiro = 0
         self.mask = pygame.mask.from_surface(self.image)
-        self.sonido_disparo = pygame.mixer.Sound("SpaceLaserShot PE1095407.wav")
 
 
     def disparar(self, grupo_sprites_todos, grupo_sprites_bala):
@@ -27,9 +26,6 @@ class Nave(pygame.sprite.Sprite):
             grupo_sprites_bala.add(bala)
             grupo_sprites_todos.add(bala)
             self.ultimo_tiro = actualidad
-        if actualidad > self.ultimo_tiro + 200:
-            self.sonido_disparo.play()
-
     def update(self, *args, **kwargs) -> None:
         # miramos teclas
         teclas = args[0]
@@ -68,6 +64,7 @@ class Nave(pygame.sprite.Sprite):
             self.rect.y = min(pantalla.get_width() - self.image.get_width(), self.rect.y)
         if teclas[pygame.K_SPACE]:
             self.disparar(grupo_sprites_todos, grupo_sprites_bala)
+
         # Hacemos la transicion de sprites
         self.contador_nave = (self.contador_nave + 5) % 40
         self.indice_naves = self.contador_nave // 30
