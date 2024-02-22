@@ -1,0 +1,77 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1app:buildapp",
+			"script": "app:build",
+			"description": "Assembles and tests this project.",
+			"group": "build",
+			"project": "app",
+			"buildFile": "C:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1\\app\\build.gradle",
+			"rootProject": "Tarea_1",
+			"projectFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"workspaceFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: app:build"
+		},
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1app:cleanapp",
+			"script": "app:clean",
+			"description": "Deletes the build directory.",
+			"group": "build",
+			"project": "app",
+			"buildFile": "C:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1\\app\\build.gradle",
+			"rootProject": "Tarea_1",
+			"projectFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"workspaceFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: app:clean"
+		},
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1app:runapp",
+			"script": "app:run",
+			"description": "Runs this project as a JVM application",
+			"group": "application",
+			"project": "app",
+			"buildFile": "C:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1\\app\\build.gradle",
+			"rootProject": "Tarea_1",
+			"projectFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"workspaceFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: app:run"
+		},
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1app:jarapp",
+			"script": "app:jar",
+			"description": "Assembles a jar archive containing the main classes.",
+			"group": "build",
+			"project": "app",
+			"buildFile": "C:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1\\app\\build.gradle",
+			"rootProject": "Tarea_1",
+			"projectFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"workspaceFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_1",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: app:jar"
+		}
+	]
+}
