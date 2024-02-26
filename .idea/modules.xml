@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Entornos.iml" filepath="$PROJECT_DIR$/.idea/Entornos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GradleEntornos.iml" filepath="$PROJECT_DIR$/GradleEntornos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GradleEntornos.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GradleEntornos.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GradleEntornos.test.iml" filepath="$PROJECT_DIR$/.idea/modules/GradleEntornos.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tarea_2_1.iml" filepath="$PROJECT_DIR$/Tarea_2_1.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tarea_2_1.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Tarea_2_1.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tarea_2_1.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Tarea_2_1.test.iml" />
