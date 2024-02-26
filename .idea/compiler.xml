@@ -4,6 +4,9 @@
     <bytecodeTargetLevel>
       <module name="GradleEntornos" target="17" />
       <module name="GradleEntornos.main" target="17" />
+      <module name="GradleEntornos.Tarea2_1" target="17" />
+      <module name="GradleEntornos.Tarea2_1.main" target="17" />
+      <module name="GradleEntornos.Tarea2_1.test" target="17" />
       <module name="GradleEntornos.test" target="17" />
       <module name="Tarea_2_1" target="17" />
       <module name="Tarea_2_1.main" target="17" />

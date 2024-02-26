@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/GradleEntornos" />
+            <option value="$PROJECT_DIR$/GradleEntornos/Tarea2_1" />
           </set>
         </option>
       </GradleProjectSettings>
