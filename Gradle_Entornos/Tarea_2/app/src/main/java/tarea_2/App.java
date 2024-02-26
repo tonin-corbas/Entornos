@@ -9,31 +9,57 @@ public class App {
 
     private int[] array;
 
+    /**
+     * 
+     * @param array Este array definirá el contenido del array
+     */
     public App(int[] array) {
         this.array = array;
     }
 
+    // public int contarElements() throws Exception {
     public int contarElements() {
-        return array.length;
+        if (array != null) {
+            return array.length;
+        } else {
+            return 0;
+        }
+        // throw new Exception("Error: el array es nulo");
     }
 
-    public Integer devolPrimero() {
-        return array.length > 0 ? array[0] : null;
+    /**
+     * Esta funcion hace esto esto y aquello.
+     * 
+     * @return entero con el valor del primer elemento. Si el array es vacio o nulo,
+     *         pasará esto.
+     */
+    public int devolPrimero() throws Exception {
+        if (array == null || array.length == 0)
+            throw new Exception("Error: el array es nulo");
+        return array[0];
     }
 
-    public Integer devolUltimo() {
-        return array.length > 0 ? array[array.length - 1] : null;
+    public int devolUltimo() throws Exception {
+        if (array == null || array.length == 0)
+            throw new Exception("Error: el array es nulo");
+        return array[array.length - 1];
     }
 
-    public Integer devolTercero() {
-        return array.length >= 3 ? array[2] : null;
+    public int devolTercero() throws Exception {
+        if (array == null || array.length == 0 || array.length < 3)
+            throw new Exception("Error: el array es nulo");
+        return array[2];
     }
 
-    public Integer sumaElements() {
-        return array.length > 0 ? Arrays.stream(array).sum() : null;
+    public int sumaElements() throws Exception {
+        if (array == null || array.length == 0)
+            throw new Exception("Error: el array es nulo");
+        return Arrays.stream(array).sum();
     }
 
-    public Double mediaElements() {
-        return array.length > 0 ? Arrays.stream(array).average().getAsDouble() : null;
+    public double mediaElements() throws Exception {
+        if (array == null || array.length == 0)
+            throw new Exception("Error: el array es nulo");
+        return Arrays.stream(array).average().getAsDouble();
     }
 }

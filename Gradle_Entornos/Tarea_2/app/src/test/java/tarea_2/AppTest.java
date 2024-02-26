@@ -7,39 +7,168 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
+   
     @Test
-    public void testGestorArrays() {
-        App gestor = new App(new int[]{1, 2, 3, 4, 5});
+    public void testContarConArrayCompleto() {
+        App gestor = new App(new int[] { 1, 2, 3, 4, 5 });
 
         assertEquals(5, gestor.contarElements());
-        assertEquals(1, gestor.devolPrimero());
-        assertEquals(5, gestor.devolUltimo());
-        assertEquals(3, gestor.devolTercero());
+
+    }
+
+    @Test
+    public void testContarConArrayVacio() {
+        App gestor = new App(new int[] {});
+
+        assertEquals(0, gestor.contarElements());
+
+    }
+
+    @Test
+    public void testContarConArrayNulo() {
+        App gestor = new App(null);
+
+        assertEquals(0, gestor.contarElements());
+        // assertNull(gestor.contarElements());
+
+    }
+
+    @Test
+    public void testSumarConArrayCompleto() throws Exception {
+        App gestor = new App(new int[] { 1, 2, 3, 4, 5 });
+
         assertEquals(15, gestor.sumaElements());
+
+    }
+
+    @Test
+    public void testSumarConArrayVacio() throws Exception {
+        App gestor = new App(new int[] {});
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.sumaElements());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testSumarConArrayNulo() throws Exception {
+        App gestor = new App(null);
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.sumaElements());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+        // assertNull(gestor.contarElements());
+
+    }
+
+    @Test
+    public void testDevolPrimeroConArrayCompleto() throws Exception {
+        App gestor = new App(new int[] { 1, 2, 3, 4, 5 });
+
+        assertEquals(1, gestor.devolPrimero());
+
+    }
+
+    @Test
+    public void testDevolPrimeroConArrayVacio() throws Exception {
+        App gestor = new App(new int[] {});
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolPrimero());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testDevolPrimeroArrayNulo() throws Exception {
+        App gestor = new App(null);
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolPrimero());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+        // assertNull(gestor.contarElements());
+
+    }
+
+    @Test
+    public void testDevolUltimoCompleto() throws Exception {
+        App gestor = new App(new int[] { 1, 2, 3, 4, 5 });
+
+        assertEquals(5, gestor.devolUltimo());
+
+    }
+
+    @Test
+    public void testDevolUltimoConArrayVacio() throws Exception {
+        App gestor = new App(new int[] {});
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolUltimo());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testDevolUltimoArrayNulo() throws Exception {
+        App gestor = new App(null);
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolUltimo());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+        // assertEquals(0, gestor.devolUltimo());
+        // assertNull(gestor.contarElements());
+
+    }
+
+    @Test
+    public void testDevolTerceroCompleto() throws Exception {
+        App gestor = new App(new int[] { 1, 2, 3, 4, 5 });
+
+        assertEquals(3, gestor.devolTercero());
+
+    }
+
+    @Test
+    public void testDevolTerceroConArrayVacio() throws Exception {
+        App gestor = new App(new int[] {});
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolTercero());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testDevolTerceroArrayNulo() throws Exception {
+        App gestor = new App(null);
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolTercero());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testMediaConArrayCompleto() throws Exception {
+        App gestor = new App(new int[] { 1, 2, 3, 4, 5 });
+
         assertEquals(3.0, gestor.mediaElements());
 
-        gestor = new App(new int[]{});
-        assertEquals(0, gestor.contarElements());
-        assertNull(gestor.devolPrimero());
-        assertNull(gestor.devolUltimo());
-        assertNull(gestor.devolTercero());
-        assertNull(gestor.sumaElements());
-        assertNull(gestor.mediaElements());
-
-        gestor = new App(new int[]{1, 2});
-        assertEquals(2, gestor.contarElements());
-        assertEquals(1, gestor.devolPrimero());
-        assertEquals(2, gestor.devolUltimo());
-        assertNull(gestor.devolTercero());
-        assertEquals(3, gestor.sumaElements());
-        assertEquals(1.5, gestor.mediaElements());
-
-        gestor = new App(new int[]{-1, 2, -3, 4, -5});
-        assertEquals(5, gestor.contarElements());
-        assertEquals(-1, gestor.devolPrimero());
-        assertEquals(-5, gestor.devolUltimo());
-        assertEquals(-3, gestor.devolTercero());
-        assertEquals(-3, gestor.sumaElements());
-        assertEquals(-0.6, gestor.mediaElements());
     }
+
+    @Test
+    public void testMediaConArrayVacio() throws Exception {
+        App gestor = new App(new int[] {});
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.mediaElements());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testMediaArrayNulo() throws Exception {
+        App gestor = new App(null);
+        Exception exception = assertThrows(Exception.class, () -> gestor.mediaElements());
+        assertEquals("Error: el array es nulo", exception.getMessage());;
+
+    }
+
+    @Test
+    public void testDevolTerceroConArrayDeDos() throws Exception {
+        App gestor = new App(new int[] { 1, 2});
+
+        Exception exception = assertThrows(Exception.class, () -> gestor.devolTercero());
+        assertEquals("Error: el array es nulo", exception.getMessage());    }
 }

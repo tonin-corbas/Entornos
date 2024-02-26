@@ -1,0 +1,41 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2app:testapp",
+			"script": "app:test",
+			"description": "Runs the test suite.",
+			"group": "verification",
+			"project": "app",
+			"buildFile": "C:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2\\app\\build.gradle",
+			"rootProject": "Tarea_2",
+			"projectFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2",
+			"workspaceFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: app:test"
+		},
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2app:cleanapp",
+			"script": "app:clean",
+			"description": "Deletes the build directory.",
+			"group": "build",
+			"project": "app",
+			"buildFile": "C:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2\\app\\build.gradle",
+			"rootProject": "Tarea_2",
+			"projectFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2",
+			"workspaceFolder": "c:\\Users\\alumne-DAM\\DAM\\Entornos\\Entornos\\Entornos\\Gradle_Entornos\\Tarea_2",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: app:clean"
+		}
+	]
+}
