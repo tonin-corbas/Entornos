@@ -6,9 +6,40 @@ package tarea_2;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+public class AppTest {
+    @Test
+    public void testGestorArrays() {
+        App gestor = new App(new int[]{1, 2, 3, 4, 5});
+
+        assertEquals(5, gestor.contarElements());
+        assertEquals(1, gestor.devolPrimero());
+        assertEquals(5, gestor.devolUltimo());
+        assertEquals(3, gestor.devolTercero());
+        assertEquals(15, gestor.sumaElements());
+        assertEquals(3.0, gestor.mediaElements());
+
+        gestor = new App(new int[]{});
+        assertEquals(0, gestor.contarElements());
+        assertNull(gestor.devolPrimero());
+        assertNull(gestor.devolUltimo());
+        assertNull(gestor.devolTercero());
+        assertNull(gestor.sumaElements());
+        assertNull(gestor.mediaElements());
+
+        gestor = new App(new int[]{1, 2});
+        assertEquals(2, gestor.contarElements());
+        assertEquals(1, gestor.devolPrimero());
+        assertEquals(2, gestor.devolUltimo());
+        assertNull(gestor.devolTercero());
+        assertEquals(3, gestor.sumaElements());
+        assertEquals(1.5, gestor.mediaElements());
+
+        gestor = new App(new int[]{-1, 2, -3, 4, -5});
+        assertEquals(5, gestor.contarElements());
+        assertEquals(-1, gestor.devolPrimero());
+        assertEquals(-5, gestor.devolUltimo());
+        assertEquals(-3, gestor.devolTercero());
+        assertEquals(-3, gestor.sumaElements());
+        assertEquals(-0.6, gestor.mediaElements());
     }
 }

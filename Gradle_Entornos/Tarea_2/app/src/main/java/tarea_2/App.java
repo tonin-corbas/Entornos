@@ -3,12 +3,37 @@
  */
 package tarea_2;
 
+import java.util.Arrays;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
+
+    private int[] array;
+
+    public App(int[] array) {
+        this.array = array;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    public int contarElements() {
+        return array.length;
+    }
+
+    public Integer devolPrimero() {
+        return array.length > 0 ? array[0] : null;
+    }
+
+    public Integer devolUltimo() {
+        return array.length > 0 ? array[array.length - 1] : null;
+    }
+
+    public Integer devolTercero() {
+        return array.length >= 3 ? array[2] : null;
+    }
+
+    public Integer sumaElements() {
+        return array.length > 0 ? Arrays.stream(array).sum() : null;
+    }
+
+    public Double mediaElements() {
+        return array.length > 0 ? Arrays.stream(array).average().getAsDouble() : null;
     }
 }
