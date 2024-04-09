@@ -1,3 +1,5 @@
+import random
+
 import pygame
 import elementos
 import pygame_menu
@@ -28,7 +30,7 @@ font = pygame.font.Font(None, 30)
 # fondo = eljuego.Fondo()
 ultimo_enemigo_creado = 0
 frecuencia_creacion_enemigo = 750
-velocidad_enemigo = 10
+velocidad_enemigo = 17
 screen_actual = False
 
 def set_difficulty(value, difficulty):
@@ -38,9 +40,9 @@ def set_difficulty(value, difficulty):
     frecuencia_creacion_enemigo = difficulty
 
     if difficulty == 200:
-        velocidad_enemigo = 15
+        velocidad_enemigo = 20
     else:
-        velocidad_enemigo = 10
+        velocidad_enemigo = 17
 
 def game_over(parametros):
     running = [True]
@@ -50,7 +52,7 @@ def game_over(parametros):
                 running = [False]
 
         sonido_game_over.play()
-        pygame.mixer.music.pause()  # El argumento -1 indica reproducción en bucle
+        pygame.mixer.music.pause()
 
         teclas = pygame.key.get_pressed()
         if teclas[pygame.K_ESCAPE]:
@@ -83,6 +85,8 @@ def start_the_game():
     global FPS
     global reloj
 
+    ultimo_enemigo_creado = -frecuencia_creacion_enemigo
+
     posicion = (screen.get_width() / 2, screen.get_height() / 1.5)
     posicionP = (screen.get_width() / 2.025, screen.get_height() * 1.5)
     # screen.get_width() / 2, screen.get_height() * 1.75
@@ -105,6 +109,9 @@ def start_the_game():
 
     pausado = False
 
+    numero_enemigos = 1
+    enemigos_por_fila = 1
+    enemigos_creados = 0
     # bucle principal
     while running[0]:
         # Limitamos el bucle al framrate definido
@@ -127,10 +134,6 @@ def start_the_game():
 
         if not pausado:
             # creacion de enemigos
-            numero_enemigos = 1
-            enemigos_por_fila = 1
-            enemigos_creados = 0
-            # creacion de enemigos
             momento_actual = pygame.time.get_ticks()
             if enemigos_creados < numero_enemigos and (
                     momento_actual > ultimo_enemigo_creado + frecuencia_creacion_enemigo):
@@ -143,9 +146,18 @@ def start_the_game():
                     enemigos_creados += 1
                     ultimo_enemigo_creado = momento_actual
 
-                # Crear enemigo fuerte
-            momento_actual = pygame.time.get_ticks()
+            # creacion de enemigos
+            numero_enemigos = 1
+            enemigos_por_fila = 1
+            enemigos_creados = 0
 
+            if momento_actual - ultimo_enemigo_creado > frecuencia_creacion_enemigo:
+                if random.random() <= 0.9:  # Ajusta el valor para cambiar la frecuencia de aparición del enemigo fuerte
+                    enemigo_fuerte = elementos.EnemigoFuerte((random.randint(0, screen.get_width() - 100), -100),
+                                                             velocidad_enemigo, grupo_sprites_planeta)
+                    grupo_sprites_todos.add(enemigo_fuerte)
+                    grupo_sprites_enemigos_fuertes.add(enemigo_fuerte)
+                    ultimo_enemigo_creado = momento_actual
         grupo_sprites_todos.update(teclas, grupo_sprites_todos, grupo_sprites_bala, grupo_sprites_enemigos,
                                            running, grupo_sprites_planeta, parametros, grupo_sprites_bala_enemigo, grupo_sprites_enemigos_fuertes)
         grupo_sprites_todos.draw(screen)

@@ -1,0 +1,2 @@
+Un Space Invaders incluyendo algunos cambios de jugabilidad que pueden recorar al Plants vs Zombies que es que tu eres una nave que debe defender su planeta de la invasión enemiga.
+Debes eliminar al máximo número de enemigos posibles. Cuidado porque si te estrellas con el planeta morirás, si tres enemigo colisionan contigo tambien serás eliminado, soldado salva a tu planeta de los invasores.
